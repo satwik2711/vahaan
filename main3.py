@@ -41,18 +41,14 @@ class VahanDashboardAutomator:
 
     def select_custom_dropdown_value(self, dropdown_id, value):
         try:
-            # Open the dropdown
             dropdown = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.ID, dropdown_id))
             )
             dropdown.click()
-
-            # Wait for the options to appear and select the desired one
             option = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, f"//li[contains(text(), '{value}')]"))
             )
             option.click()
-
             print(f"Selected {value} from dropdown {dropdown_id}.")
         except (NoSuchElementException, TimeoutException, ElementNotInteractableException) as e:
             print(f"Error selecting dropdown value: {e}")
@@ -74,26 +70,13 @@ class VahanDashboardAutomator:
         self.driver.quit()
 
 
-# Example of how to use the class
 if __name__ == "__main__":
     automator = VahanDashboardAutomator()
     automator.start()
 
-    # Select "Uttar Pradesh" from the state dropdown
     automator.select_custom_dropdown_value("j_idt38", "Uttar Pradesh")
-
-    # Select "Agra RTO" from the RTO dropdown
     automator.select_custom_dropdown_value("selectedRto", "Agra RTO")
-
-    # Select "Fuel" for X-axis
     automator.select_custom_dropdown_value("xaxisVar", "Fuel")
-
-    # Select "Maker" for Y-axis
     automator.select_custom_dropdown_value("yaxisVar", "Maker")
-
-    # Click the refresh button
     automator.click_refresh_button("j_idt73")
     input("Press Enter to close the browser...")
-
-    # Close the browser
-    # automator.close()
